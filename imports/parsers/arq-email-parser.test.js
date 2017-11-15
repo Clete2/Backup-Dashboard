@@ -5,7 +5,7 @@ import { canParse, parse } from './arq-email-parser';
 
 
 if (Meteor.isServer) {
-  describe('arq email parser', () => {
+  describe('arq email parser canParse method', () => {
     it('can parse a report with the word arq in it', function () {
       assert.isTrue(canParse('Arq'));
     });
@@ -20,6 +20,11 @@ if (Meteor.isServer) {
 
     it('cannot parse a null result', () => {
       assert.isFalse(canParse(null));
+    });
+
+    it('cannot parse a resut that does not have a standalone "Arq"', () => {
+      assert.isFalse(canParse('aarq'));
+      assert.isFalse(canParse('arqA'));
     });
   });
 }
