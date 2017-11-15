@@ -1,0 +1,9 @@
+{
+  "username": "myemail@example.com",
+  "password": "MyP4ssw0rd",
+  "host": "imap.gmail.com",
+  "port": 993,
+  "tls": true,
+  "pollInterval": 300000,
+  "mailboxes": ["INBOX", "[Gmail]/Spam"]  
+}
