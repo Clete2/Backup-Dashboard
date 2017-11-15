@@ -31,7 +31,7 @@ const pollMail = () => {
 
   readUnreadMessages().then((messages) => {
     // TODO: Process those messages. Now for the fun part!!
-    console.log(`Here are your messages: ${messages}`);
+    console.log(`Here are your messages: ${JSON.stringify(messages)}`);
   });
 
 
