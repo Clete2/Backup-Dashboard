@@ -5,10 +5,11 @@ const folderStartEndScannedUploadedRegex = /Folder\nStart Date\nEnd Date\nScanne
 
 export const canParse = text => text !== null && (!!text.match(/\barq\b/i));
 
+// Matches and returns all groups except the first (whole match) group
 const match = (regex, text) => {
-  const matchResult = regex.exec(text);
+  const matchResult = text ? regex.exec(text) : null;
 
-  return matchResult ? matchResult[1] : null;
+  return matchResult && matchResult.length > 1 ? matchResult.slice(1) : null;
 };
 
 const assignPropertyIfPresent = (result, propertyName, value) => {
@@ -20,6 +21,9 @@ const parse = (text) => {
 
   assignPropertyIfPresent(result, 'computer', match(computerRegex, text));
   assignPropertyIfPresent(result, 'user', match(userRegex, text));
+  assignPropertyIfPresent(result, 'destination', match(destinationRegex, text));
+
+  //const folderStartEndScannedUploaded = match();
 
   return result;
 };

@@ -43,28 +43,26 @@ if (Meteor.isServer) {
   });
 
   describe('arq email parser parse method', () => {
-    it('Can determine the computer name in a valid result', () => {
-      assert.equal('my MacBook Pro', parse(successResultText).computer);
+    const assertSuccessErrorInvalid = (successExpected, errorExpected, propertyName) => {
+      assert.equal(successExpected, parse(successResultText)[propertyName]);
+      assert.equal(errorExpected, parse(errorResultText)[propertyName]);
+      assert.notProperty(parse(''), propertyName);
+      assert.notProperty(parse(null), propertyName);
+      assert.notProperty(parse(undefined), propertyName);
+    };
+
+    it('Can determine the computer name', () => {
+      const computerExpected = 'my MacBook Pro';
+      assertSuccessErrorInvalid(computerExpected, computerExpected, 'computer');
     });
 
-    it('Can determine the computer name in an errored result', () => {
-      assert.equal('my MacBook Pro', parse(errorResultText).computer);
+    it('Can determine the user name', () => {
+      const userExpected = 'me';
+      assertSuccessErrorInvalid(userExpected, userExpected, 'user');
     });
 
-    it('Cannot determine the computer name in an invalid result', () => {
-      assert.notProperty(parse(''), 'computer');
-    });
-
-    it('Can determine the user name in a successful result', () => {
-      assert.equal('me', parse(successResultText).user);
-    });
-
-    it('Can determine the user name in an errored result', () => {
-      assert.equal('me', parse(errorResultText).user);
-    });
-
-    it('Cannot determine the user name in an invalid result', () => {
-      assert.notProperty(parse(''), 'user');
+    it('Can determine the destination', () => {
+      assertSuccessErrorInvalid('my.example.com', 'me.example.com', 'destination');
     });
   });
 }
