@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 // eslint-disable-next-line import/no-unresolved
-import { assert } from 'meteor/practicalmeteor:chai';
+import { assert } from 'chai';
 import parse, { canParse } from './arq-email-parser';
 
 const errorResultText = 'Computer:\nmy MacBook Pro\n\nUser:\nme\n\nDestination:\nme.example.com\n\n\n\n \n\nFolder\nStart Date\nEnd Date\nScanned\nUploaded\n\nme\nNovember 9, 2017 at 7:29:02 PM EST\nNovember 10, 2017at 9:22:28 PM EST\n86.203 GB\n1.631 GB\n\n\n\n \n\n\nLog:\n\nArq Agent version 5.9.4 started backup session for sftp:\/\/backup@me.example.com:9482\/mnt\/backup\/arq\/me\/UUID-GOES-HERE on November 9, 2017 at 7:28:53 PM EST\n\n\nBackup session for \/Users\/me started on November 9, 2017 at 7:29:02 PM EST\nFound in-progress backup record for \/Users\/me\nSFTP server is unavailable.\n\nAborted.\n\nScanned 86.203 GB (40372 files)\nUploaded 1.631 GB\nBackup session for \/Users\/me ended on November 10, 2017 at 9:22:28 PM EST\n\n\nBackup session for sftp:\/\/backup@me.example.com:9482\/mnt\/backup\/arq\/me\/UUID-GOES-HERE ended on November 10, 2017 at 9:22:29 PM EST (1 error)\n\n';
@@ -45,6 +45,26 @@ if (Meteor.isServer) {
   describe('arq email parser parse method', () => {
     it('Can determine the computer name in a valid result', () => {
       assert.equal('my MacBook Pro', parse(successResultText).computer);
+    });
+
+    it('Can determine the computer name in an errored result', () => {
+      assert.equal('my MacBook Pro', parse(errorResultText).computer);
+    });
+
+    it('Cannot determine the computer name in an invalid result', () => {
+      assert.notProperty(parse(''), 'computer');
+    });
+
+    it('Can determine the user name in a successful result', () => {
+      assert.equal('me', parse(successResultText).user);
+    });
+
+    it('Can determine the user name in an errored result', () => {
+      assert.equal('me', parse(errorResultText).user);
+    });
+
+    it('Cannot determine the user name in an invalid result', () => {
+      assert.notProperty(parse(''), 'user');
     });
   });
 }
