@@ -64,5 +64,10 @@ if (Meteor.isServer) {
     it('Can determine the destination', () => {
       assertSuccessErrorInvalid('my.example.com', 'me.example.com', 'destination');
     });
+
+    it('Can parse the folder', () => {
+      const folderExpected = 'me';
+      assertSuccessErrorInvalid(folderExpected, folderExpected, 'folder');
+    });
   });
 }
