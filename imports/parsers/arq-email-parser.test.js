@@ -44,8 +44,16 @@ if (Meteor.isServer) {
 
   describe('arq email parser parse method', () => {
     const assertSuccessErrorInvalid = (successExpected, errorExpected, propertyName) => {
-      assert.equal(successExpected, parse(successResultText)[propertyName]);
-      assert.equal(errorExpected, parse(errorResultText)[propertyName]);
+      const successResult = parse(successResultText)[propertyName];
+      const errorResult = parse(errorResultText)[propertyName];
+
+      const successResultCasted = successResult instanceof Date ?
+        successResult.toUTCString() : successResult;
+      const errorResultCasted = errorResult instanceof Date ?
+        errorResult.toUTCString() : errorResult;
+
+      assert.equal(successExpected, successResultCasted);
+      assert.equal(errorExpected, errorResultCasted);
       assert.notProperty(parse(''), propertyName);
       assert.notProperty(parse(null), propertyName);
       assert.notProperty(parse(undefined), propertyName);
@@ -68,6 +76,14 @@ if (Meteor.isServer) {
     it('Can parse the folder', () => {
       const folderExpected = 'me';
       assertSuccessErrorInvalid(folderExpected, folderExpected, 'folder');
+    });
+
+    it('Can parse the start date', () => {
+      assertSuccessErrorInvalid('Thu, 09 Nov 2017 00:19:56 GMT', 'Fri, 10 Nov 2017 00:29:02 GMT', 'start');
+    });
+
+    it('Can parse the end date', () => {
+      assertSuccessErrorInvalid('Thu, 09 Nov 2017 00:21:51 GMT', 'Fri, 10 Nov 2017 05:00:00 GMT', 'end');
     });
   });
 }
