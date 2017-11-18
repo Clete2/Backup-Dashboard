@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import MailReader from '../../mail_reader/MailReader';
+import parseMail from '../../parsers/arq-email-parser';
+import Results from '../../api/results/results';
 
 const pollMail = () => {
   const {
@@ -22,7 +24,11 @@ const pollMail = () => {
       readPromises.push(reader.readMessages(mailbox));
     });
 
-    messages = messages.concat(...await Promise.all(readPromises));
+    const mailboxPromisesResolved = await Promise.all(readPromises);
+
+    mailboxPromisesResolved.forEach((mailboxPromiseResolved) => {
+      messages = messages.concat(...mailboxPromiseResolved);
+    });
 
     reader.close();
 
@@ -30,8 +36,9 @@ const pollMail = () => {
   };
 
   readUnreadMessages().then((messages) => {
-    // TODO: Process those messages. Now for the fun part!!
-    console.log(`Here are your messages: ${JSON.stringify(messages)}`);
+    messages.forEach((message) => {
+      Results.insert(parseMail(message.text));
+    });
   });
 
 
