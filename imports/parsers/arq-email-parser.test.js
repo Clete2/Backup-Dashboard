@@ -93,5 +93,13 @@ if (Meteor.isServer) {
     it('Can parse the uploaded filesize', () => {
       assertSuccessErrorInvalid(239285043, 1751272915, 'uploaded');
     });
+
+    it('Can determine if an error occured', () => {
+      assertSuccessErrorInvalid(false, true, 'hasErrors');
+    });
+
+    it('Can determine full backup text', () => {
+      assertSuccessErrorInvalid(successResultText, errorResultText, 'text');
+    });
   });
 }
