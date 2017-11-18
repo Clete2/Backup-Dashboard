@@ -1,3 +1,4 @@
+import parseFilesize from 'filesize-parser';
 import parseDate from './arq-date-parser';
 
 const computerRegex = /Computer:\n(.*?)\n/;
@@ -11,7 +12,18 @@ export const canParse = text => text !== null && (!!text.match(/\barq\b/i));
 const match = (regex, text) => {
   const matchResult = text ? regex.exec(text) : null;
 
-  return matchResult && matchResult.length > 1 ? matchResult.slice(1) : null;
+  if (!matchResult) {
+    return null;
+  }
+
+  const matchResultSliced = matchResult.slice(1);
+
+  // Just return the data instead of a list with one element
+  if (matchResultSliced.length === 1) {
+    return matchResultSliced[0];
+  }
+
+  return matchResultSliced;
 };
 
 const assignPropertyIfPresent = (result, propertyName, value) => {
@@ -33,8 +45,8 @@ const parse = (text) => {
     assignPropertyIfPresent(result, 'folder', folder);
     assignPropertyIfPresent(result, 'start', parseDate(start));
     assignPropertyIfPresent(result, 'end', parseDate(end));
-    assignPropertyIfPresent(result, 'scanned', scanned);
-    assignPropertyIfPresent(result, 'uploaded', uploaded);
+    assignPropertyIfPresent(result, 'scanned', parseFilesize(scanned));
+    assignPropertyIfPresent(result, 'uploaded', parseFilesize(uploaded));
   }
 
   return result;
