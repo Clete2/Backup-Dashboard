@@ -1,3 +1,5 @@
+import parseDate from './arq-date-parser';
+
 const computerRegex = /Computer:\n(.*?)\n/;
 const userRegex = /User:\n(.*?)\n/;
 const destinationRegex = /Destination:\n(.*?)\n/;
@@ -26,7 +28,13 @@ const parse = (text) => {
   const statMatch = match(folderStartEndScannedUploadedRegex, text);
 
   if (statMatch) {
-    [result.folder, result.start, result.end, result.scanned, result.uploaded] = statMatch;
+    const [folder, start, end, scanned, uploaded] = statMatch;
+
+    assignPropertyIfPresent(result, 'folder', folder);
+    assignPropertyIfPresent(result, 'start', parseDate(start));
+    assignPropertyIfPresent(result, 'end', parseDate(end));
+    assignPropertyIfPresent(result, 'scanned', scanned);
+    assignPropertyIfPresent(result, 'uploaded', uploaded);
   }
 
   return result;

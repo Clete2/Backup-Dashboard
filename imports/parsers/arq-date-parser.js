@@ -13,12 +13,12 @@ const tzMap = {
 
 const parse = (date) => {
   if (!date) {
-    return new Date();
+    return null;
   }
 
   const tzAbbr = date.slice(-3);
   const momentDate = moment.tz(date, 'MMMM DD, YYYY at hh:mm:ss A', tzMap[tzAbbr]);
-  return momentDate.isValid() ? momentDate.toDate() : new Date();
+  return momentDate.isValid() ? momentDate.toDate() : null;
 };
 
 export default parse;
