@@ -98,6 +98,10 @@ if (Meteor.isServer) {
       assertSuccessErrorInvalid(false, true, 'hasErrors');
     });
 
+    it('Can parse the number of files scanned', () => {
+      assertSuccessErrorInvalid(152147, 40372, 'filesScanned');
+    });
+
     it('Can determine full backup text', () => {
       assertSuccessErrorInvalid(successResultText, errorResultText, 'text');
     });

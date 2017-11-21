@@ -6,6 +6,7 @@ const userRegex = /User:\n(.*?)\n/;
 const destinationRegex = /Destination:\n(.*?)\n/;
 const folderStartEndScannedUploadedRegex = /Folder\nStart Date\nEnd Date\nScanned\nUploaded\n\n(.+?)\n(.+?)\n(.+?)\n(.+?)\n(.+?)\n/;
 const erroredRegex = /error/i;
+const filesScannedRegex = /Scanned(?!\n).*?\((\d+) files\)/;
 
 export const canParse = text => text !== null && (!!text.match(/\barq\b/i));
 
@@ -37,6 +38,7 @@ const parse = (text) => {
   assignPropertyIfPresent(result, 'computer', match(computerRegex, text));
   assignPropertyIfPresent(result, 'user', match(userRegex, text));
   assignPropertyIfPresent(result, 'destination', match(destinationRegex, text));
+  assignPropertyIfPresent(result, 'filesScanned', match(filesScannedRegex, text));
 
   const statMatch = match(folderStartEndScannedUploadedRegex, text);
 

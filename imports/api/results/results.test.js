@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'meteor/practicalmeteor:chai';
-import { Results } from './results.js';
+import Results from './results.js';
 
 if (Meteor.isServer) {
   describe('results collection', function () {
