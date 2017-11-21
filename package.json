@@ -15,8 +15,8 @@
     "mailparser": "^2.1.0",
     "meteor-node-stubs": "~0.3.2",
     "moment-timezone": "^0.5.14",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1"
   },
   "devDependencies": {
     "@meteorjs/eslint-config-meteor": "^1.0.5",
