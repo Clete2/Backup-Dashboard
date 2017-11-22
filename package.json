@@ -16,7 +16,9 @@
     "meteor-node-stubs": "~0.3.2",
     "moment-timezone": "^0.5.14",
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-addons-pure-render-mixin": "^15.6.2",
+    "react-dom": "^16.1.1",
+    "react-table": "^6.7.4"
   },
   "devDependencies": {
     "@meteorjs/eslint-config-meteor": "^1.0.5",
