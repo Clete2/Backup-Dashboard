@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import MailReader from '../../mail_reader/MailReader';
-import parseMail from '../../parsers/arq-email-parser';
+import parseMail, { canParse } from '../../parsers/arq-email-parser';
 import Results from '../../api/results/results';
 
 const pollMail = () => {
@@ -37,7 +37,9 @@ const pollMail = () => {
 
   readUnreadMessages().then((messages) => {
     messages.forEach((message) => {
-      Results.insert(parseMail(message.text));
+      if (canParse(message)) {
+        Results.insert(parseMail(message.text));
+      }
     });
   });
 

@@ -7,8 +7,9 @@ const destinationRegex = /Destination:\n(.*?)\n/;
 const folderStartEndScannedUploadedRegex = /Folder\nStart Date\nEnd Date\nScanned\nUploaded\n\n(.+?)\n(.+?)\n(.+?)\n(.+?)\n(.+?)\n/;
 const erroredRegex = /error/i;
 const filesScannedRegex = /Scanned(?!\n).*?\((\d+) files\)/;
+const canParseRegex = /\barq\b/i;
 
-export const canParse = text => text !== null && (!!text.match(/\barq\b/i));
+export const canParse = text => text != null && (!!canParseRegex.exec(text));
 
 // Matches and returns all groups except the first (whole match) group
 const match = (regex, text) => {
