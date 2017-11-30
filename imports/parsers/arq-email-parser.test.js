@@ -8,8 +8,12 @@ const errorResultText = 'Computer:\nmy MacBook Pro\n\nUser:\nme\n\nDestination:\
 
 if (Meteor.isServer) {
   describe('arq email parser canParse method', () => {
-    it('can parse a report with the word arq in it', () => {
-      assert.isTrue(canParse('Arq'));
+    it('can parse a report with the words arq agent in it', () => {
+      assert.isTrue(canParse('Arq Agent'));
+    });
+
+    it('can parse a report with the words arq agent in it with additional spacing', () => {
+      assert.isTrue(canParse(' Arq Agent '));
     });
 
     it('cannot parse an empty report', () => {
@@ -24,13 +28,13 @@ if (Meteor.isServer) {
       assert.isFalse(canParse(null));
     });
 
-    it('cannot parse a result that does not have a standalone "Arq"', () => {
-      assert.isFalse(canParse('aarq'));
-      assert.isFalse(canParse('arqA'));
+    it('cannot parse a result that does not have a standalone "Arq Agent"', () => {
+      assert.isFalse(canParse('aarq agent'));
+      assert.isFalse(canParse('arqA agent'));
     });
 
-    it('can parse a result that has Arq in the middle', () => {
-      assert.isTrue(canParse('Hey this is an aRq report'));
+    it('can parse a result that has Arq Agent in the middle', () => {
+      assert.isTrue(canParse('Hey this is an aRq agEnt report'));
     });
 
     it('can parse a real result with errors', () => {

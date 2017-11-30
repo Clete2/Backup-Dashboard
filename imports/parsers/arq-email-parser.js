@@ -7,7 +7,7 @@ const destinationRegex = /Destination:\n(.*?)\n/;
 const folderStartEndScannedUploadedRegex = /Folder\nStart Date\nEnd Date\nScanned\nUploaded\n\n(.+?)\n(.+?)\n(.+?)\n(.+?)\n(.+?)\n/;
 const erroredRegex = /error/i;
 const filesScannedRegex = /Scanned(?!\n).*?\((\d+) files\)/;
-const canParseRegex = /\barq\b/i;
+const canParseRegex = /\barq\s+agent\b/i;
 
 export const canParse = text => text != null && (!!canParseRegex.exec(text));
 
