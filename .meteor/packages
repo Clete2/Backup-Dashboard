@@ -25,3 +25,4 @@ meteortesting:mocha
 practicalmeteor:mocha-console-runner
 simple:rest
 react-meteor-data
+jcbernack:reactive-aggregate

@@ -7,7 +7,6 @@ import filesize from 'filesize';
 
 import Results from '../api/results/results';
 
-
 class ResultList extends Component {
   columns() {
     const columns = [];
@@ -61,7 +60,7 @@ class ResultList extends Component {
 }
 
 export default withTracker(({ id }) => {
-  const resultsHandle = Meteor.subscribe('results.all', id);
+  const resultsHandle = Meteor.subscribe('results.latestByComputerAndDestination', id);
   const loading = !resultsHandle.ready();
 
   return {
