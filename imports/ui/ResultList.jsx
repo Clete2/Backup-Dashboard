@@ -29,6 +29,7 @@ class ResultList extends Component {
       // TODO: This is NOT the place to hardcode presentation logic
       Object.entries(result).forEach((entry) => {
         let newResult;
+        console.log(result);
 
         if (typeof (entry[1]) === 'object') {
           newResult = entry[1].toString();
@@ -43,8 +44,6 @@ class ResultList extends Component {
 
       results.push(resultMapped);
     });
-
-    console.log(results);
 
     return results;
   }

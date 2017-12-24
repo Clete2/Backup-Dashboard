@@ -37,7 +37,9 @@ const pollMail = () => {
 
   readUnreadMessages().then((messages) => {
     messages.forEach((message) => {
-      if (canParse(message)) {
+      console.info('Got a new e-mail');
+      if (canParse(message.text)) {
+        console.info('Arq can parse it. Parsing and inserting.');
         Results.insert(parseMail(message.text));
       }
     });

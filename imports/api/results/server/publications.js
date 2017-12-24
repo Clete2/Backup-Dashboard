@@ -15,6 +15,7 @@ Meteor.publish('results.latestByComputerAndDestination', function () {
   ReactiveAggregate(
     this, Results,
     [
+      { $match: { end: { $exists: true } } },
       { $sort: { end: 1 } },
       {
         $group: {
